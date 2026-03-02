@@ -14,7 +14,14 @@ LOG_FILE="logs/sim_${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}.log"
 
 echo "Starting simulation array task ${SLURM_ARRAY_TASK_ID} on node $(hostname)" > $LOG_FILE
 
-# 2. Execute the simulation and redirect output to the log file
-vvp alu_regression.vvp +SEED=${SLURM_ARRAY_TASK_ID} >> $LOG_FILE 2>&1
+# 2. Compile the design specific to this task to avoid race conditions
+VVP_FILE="alu_regression_${SLURM_ARRAY_TASK_ID}.vvp"
+iverilog -o $VVP_FILE alu_tb.v alu.v
+
+# 3. Execute the simulation and redirect output to the log file
+vvp $VVP_FILE +SEED=${SLURM_ARRAY_TASK_ID} >> $LOG_FILE 2>&1
+
+# 4. Clean up the compiled file
+rm -f $VVP_FILE
 
 echo "Finished task ${SLURM_ARRAY_TASK_ID}" >> $LOG_FILE
