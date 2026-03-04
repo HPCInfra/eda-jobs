@@ -1,0 +1,27 @@
+#!/bin/bash
+#SBATCH --job-name=alu-test
+#SBATCH --array=1-32
+#SBATCH --output=results/test-%a.out
+#SBATCH --error=results/test-%a.err
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:05:00
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$SCRIPT_DIR"
+
+mkdir -p results
+
+# Compile if needed
+if [ ! -f alu_tb.out ] || [ alu.v -nt alu_tb.out ] || [ alu_tb.v -nt alu_tb.out ]; then
+    iverilog -Wall -o alu_tb.out alu.v alu_tb.v
+fi
+
+TEST_NUM=$SLURM_ARRAY_TASK_ID
+TEST_NAME=$(awk -v n="$TEST_NUM" '$1 == n { print $2 }' tests.txt)
+
+echo "=== Test #${TEST_NUM} (${TEST_NAME}) ==="
+echo "Host: $(hostname), Time: $(date)"
+echo "---"
+
+vvp alu_tb.out +TEST_NUM="$TEST_NUM"
