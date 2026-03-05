@@ -1,4 +1,4 @@
-.PHONY: lint build run wave clean
+.PHONY: lint build run wave submit clean
 
 SRCS = alu.v
 TB   = alu_tb.v
@@ -17,5 +17,11 @@ run: build
 wave: run
 	gtkwave $(VCD) alu_tb.gtkw &
 
+# Compile on head node first, then submit array job
+submit: build
+	mkdir -p results
+	sbatch tests.sh
+
 clean:
 	rm -f $(OUT) $(VCD)
+	rm -f results/*.out results/*.err
