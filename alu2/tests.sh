@@ -7,10 +7,8 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --time=00:05:00
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-cd "$SCRIPT_DIR"
+cd "$SLURM_SUBMIT_DIR"
 
-# alu_tb.out must already exist -- compile on the head node with: make submit
 if [ ! -f alu_tb.out ]; then
     echo "ERROR: alu_tb.out not found. Please compile first: iverilog -Wall -o alu_tb.out alu.v alu_tb.v"
     exit 1
