@@ -12,6 +12,7 @@ cd "$SCRIPT_DIR"
 
 mkdir -p results
 
+# alu_tb.out must already exist — compile on the head node with: make submit
 if [ ! -f alu_tb.out ]; then
     echo "ERROR: alu_tb.out not found. Please compile first: iverilog -Wall -o alu_tb.out alu.v alu_tb.v"
     exit 1
