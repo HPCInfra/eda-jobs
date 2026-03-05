@@ -12,9 +12,9 @@ cd "$SCRIPT_DIR"
 
 mkdir -p results
 
-# Compile if needed
-if [ ! -f alu_tb.out ] || [ alu.v -nt alu_tb.out ] || [ alu_tb.v -nt alu_tb.out ]; then
-    iverilog -Wall -o alu_tb.out alu.v alu_tb.v
+if [ ! -f alu_tb.out ]; then
+    echo "ERROR: alu_tb.out not found. Please compile first: iverilog -Wall -o alu_tb.out alu.v alu_tb.v"
+    exit 1
 fi
 
 TEST_NUM=$SLURM_ARRAY_TASK_ID
