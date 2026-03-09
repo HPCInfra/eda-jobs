@@ -1,4 +1,4 @@
-.PHONY: lint build run wave submit clean
+.PHONY: lint build run wave submit clean openroad
 
 SRCS = alu.v
 TB   = alu_tb.v
@@ -16,6 +16,8 @@ run: build
 
 wave: run
 	gtkwave $(VCD) alu_tb.gtkw &
+
+openroad: openroad -gui
 
 # Compile on head node first, then submit array job
 submit: build
