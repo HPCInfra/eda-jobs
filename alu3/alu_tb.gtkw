@@ -1,0 +1,22 @@
+[*]
+[*] GTKWave save file
+[*]
+[dumpfile] "alu_tb.vcd"
+[timestart] 0
+[size] 1200 600
+[pos] -1 -1
+*-3.0 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] alu_tb.
+[sst_expanded] 1
+@28
+alu_tb.op[3:0]
+@22
+alu_tb.a[7:0]
+alu_tb.b[7:0]
+alu_tb.result[7:0]
+@28
+alu_tb.zero
+alu_tb.carry
+alu_tb.overflow
+[pattern_trace] 1
+[pattern_trace] 0

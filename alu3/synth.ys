@@ -1,0 +1,11 @@
+#synth.ys
+read_verilog alu.v
+synth -top alu
+
+# Map to the Nangate45 standard cell library
+dfflibmap -liberty Nangate45_typ.lib
+abc -liberty Nangate45_typ.lib
+
+# Clean up and write the synthesized netlist
+clean
+write_verilog alu_synth.v
